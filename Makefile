@@ -13,11 +13,17 @@ clean:
 memory.o: memory.c memory.h common.h
 	$(CC) -c $(CFLAGS) memory.c
 
-chunk.o: chunk.c chunk.h common.h memory.o
+value.o: value.c value.h common.h memory.o
+	$(CC) -c $(CFLAGS) value.c
+
+chunk.o: chunk.c chunk.h common.h value.o memory.o
 	$(CC) -c $(CFLAGS) chunk.c
 
-clox: memory.o chunk.o common.h main.c
-	$(CC) $(CFLAGS) memory.o chunk.o main.c -o clox
+debug.o: debug.c debug.h
+	$(CC) -c $(CFLAGS) debug.c
+
+clox: memory.o chunk.o value.o debug.o common.h main.c
+	$(CC) $(CFLAGS) memory.o chunk.o value.o debug.o main.c -o clox
 
 .PHONY: all
 all: clox
