@@ -22,8 +22,11 @@ chunk.o: chunk.c chunk.h common.h value.o memory.o
 debug.o: debug.c debug.h
 	$(CC) -c $(CFLAGS) debug.c
 
-clox: memory.o chunk.o value.o debug.o common.h main.c
-	$(CC) $(CFLAGS) memory.o chunk.o value.o debug.o main.c -o clox
+vm.o: vm.c vm.h chunk.o common.h debug.h
+	$(CC) -c $(CFLAGS) vm.c
+
+clox: memory.o chunk.o value.o vm.o debug.o common.h main.c
+	$(CC) $(CFLAGS) memory.o chunk.o value.o vm.o debug.o main.c -o clox
 
 .PHONY: all
 all: clox
