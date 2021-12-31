@@ -22,17 +22,17 @@ chunk.o: chunk.c chunk.h common.h value.o memory.o
 scanner.o: scanner.c scanner.h common.h
 	$(CC) -c $(CFLAGS) scanner.c
 
-compiler.o: compiler.c compiler.h common.h
+compiler.o: compiler.c compiler.h common.h scanner.o
 	$(CC) -c $(CFLAGS) compiler.c
 
-debug.o: debug.c debug.h
+debug.o: debug.c debug.h chunk.o value.o
 	$(CC) -c $(CFLAGS) debug.c
 
-vm.o: vm.c vm.h chunk.o common.h debug.h
+vm.o: vm.c vm.h common.h chunk.o value.o compiler.o debug.o
 	$(CC) -c $(CFLAGS) vm.c
 
-clox: memory.o chunk.o value.o scanner.o compiler.o vm.o debug.o common.h main.c
-	$(CC) $(CFLAGS) memory.o chunk.o value.o scanner.o compiler.o vm.o debug.o main.c -o clox
+clox: memory.o value.o chunk.o scanner.o compiler.o debug.o vm.o common.h main.c
+	$(CC) $(CFLAGS) memory.o value.o chunk.o scanner.o compiler.o debug.o vm.o main.c -o clox
 
 .PHONY: all
 all: clox
