@@ -19,14 +19,20 @@ value.o: value.c value.h common.h memory.o
 chunk.o: chunk.c chunk.h common.h value.o memory.o
 	$(CC) -c $(CFLAGS) chunk.c
 
+scanner.o: scanner.c scanner.h common.h
+	$(CC) -c $(CFLAGS) scanner.c
+
+compiler.o: compiler.c compiler.h common.h
+	$(CC) -c $(CFLAGS) compiler.c
+
 debug.o: debug.c debug.h
 	$(CC) -c $(CFLAGS) debug.c
 
 vm.o: vm.c vm.h chunk.o common.h debug.h
 	$(CC) -c $(CFLAGS) vm.c
 
-clox: memory.o chunk.o value.o vm.o debug.o common.h main.c
-	$(CC) $(CFLAGS) memory.o chunk.o value.o vm.o debug.o main.c -o clox
+clox: memory.o chunk.o value.o scanner.o compiler.o vm.o debug.o common.h main.c
+	$(CC) $(CFLAGS) memory.o chunk.o value.o scanner.o compiler.o vm.o debug.o main.c -o clox
 
 .PHONY: all
 all: clox
