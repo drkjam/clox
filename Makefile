@@ -28,11 +28,14 @@ compiler.o: compiler.c compiler.h common.h scanner.o
 debug.o: debug.c debug.h chunk.o value.o
 	$(CC) -c $(CFLAGS) debug.c
 
+object.o: object.c object.h
+	$(CC) -c $(CFLAGS) object.c
+
 vm.o: vm.c vm.h common.h chunk.o value.o compiler.o debug.o
 	$(CC) -c $(CFLAGS) vm.c
 
-clox: memory.o value.o chunk.o scanner.o compiler.o debug.o vm.o common.h main.c
-	$(CC) $(CFLAGS) memory.o value.o chunk.o scanner.o compiler.o debug.o vm.o main.c -o clox
+clox: memory.o value.o chunk.o scanner.o compiler.o debug.o object.o vm.o common.h main.c
+	$(CC) $(CFLAGS) memory.o value.o chunk.o scanner.o compiler.o debug.o object.o vm.o main.c -o clox
 
 .PHONY: all
 all: clox
