@@ -4,8 +4,13 @@ fun outer() {
     fun middle() {
         var c = 3;
         var d = 4;
-        fun iner() {
-            print a + b + c + d;
+        fun inner() {
+            return a + b + c + d;
         }
+        return inner();
     }
+    return middle();
 }
+var result = outer();
+print result;
+print result == 10;
