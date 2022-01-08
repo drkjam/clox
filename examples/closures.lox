@@ -1,0 +1,15 @@
+var x = "global";
+fun outer() {
+    print "outer() - before local: " + x;
+    var x = "outer";
+    fun inner() {
+        print "inner() - before local: " + x;
+        var x = "inner";
+        print "inner() - after local: " + x;
+    }
+    inner();
+    print "outer() - after inner() : " + x;
+}
+print "toplevel - before: " + x;
+outer();
+print "toplevel - after outer(): " + x;
